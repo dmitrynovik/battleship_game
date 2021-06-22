@@ -18,7 +18,7 @@ namespace BattleshipGame
         public uint Height { get; }
         public uint Width { get; }  
 
-        public bool TryAdd(Piece piece)
+        public virtual bool TryAdd(Piece piece)
         {
             if (piece == null)
                 return false;
