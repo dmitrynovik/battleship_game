@@ -1,20 +1,17 @@
-using NUnit.Framework;
+using Xunit;
 using FluentAssertions;
 
 namespace BattleshipGame.Tests
 {
-    [TestFixture]
     public class ShipTest
     {
-        [Test]
-        public void Ship_Of_Size_2_Hit_Once_Should_Be_Alive() => MakeShip()
+        [Fact] public void Ship_Of_Size_2_Hit_Once_Should_Be_Alive() => MakeShip()
             .Hit(0, 0)
             .IsDead
             .Should()
             .Be(false);
 
-        [Test]
-        public void Ship_Of_Size_2_Hit_Twice_Should_Be_Dead() => MakeShip()
+        [Fact] public void Ship_Of_Size_2_Hit_Twice_Should_Be_Dead() => MakeShip()
             .Hit(0, 0)
             .Hit(1, 0)
             .IsDead
