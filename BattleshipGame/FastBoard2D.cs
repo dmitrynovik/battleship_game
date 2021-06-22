@@ -8,7 +8,7 @@ namespace BattleshipGame
     /// - only allocates memory for points occupied by pieces (e.g. ships)
     /// - computes a unique hash key for occupied points to do fast O(1) lookup
     /// </summary>    
-    public class FastBoard2D : Board2D
+    public class FastBoard2D : SparseBoard2D
     {
         private IDictionary<uint, Point2D> _points = new Dictionary<uint, Point2D>();
 

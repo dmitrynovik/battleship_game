@@ -7,9 +7,9 @@ namespace BattleshipGame
     ///
     /// For the simplicity of implementation, a board can be also viewed as a piece, which is a Union of all pieces (shapes) it holds. 
     /// </summary>    
-    public abstract class Board2D : Piece
+    public abstract class SparseBoard2D : Piece
     {
-        public Board2D(uint width = 10, uint height = 10) : base(0, 0)
+        public SparseBoard2D(uint width = 10, uint height = 10) : base(0, 0)
         {
             Height = height;
             Width = width;
@@ -32,7 +32,7 @@ namespace BattleshipGame
             return TryAddImpl(piece);
         }
 
-        public Board2D Add(Piece piece)
+        public SparseBoard2D Add(Piece piece)
         {
             TryAdd(piece);
             return this;
