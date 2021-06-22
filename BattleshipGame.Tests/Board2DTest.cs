@@ -41,20 +41,27 @@ namespace BattleshipGame.Tests
             var board = MakeBoard().Add(new Ship(0, 0, Direction.Horizontal, 10));
 
             board.TryAdd(new Ship(2, 5, Direction.Vertical, 4))
-                .Should().Be(true);
+                .Should()
+                .Be(true);
         }
 
         [Fact] public void Cannot_Add_Ship_Which_Overlaps_With_Another_Ship()
         {
             var board = MakeBoard().Add(new Ship(0, 0, Direction.Horizontal, 10));
 
-            board.TryAdd(new Ship(0, 5, Direction.Vertical, 10)).Should().Be(false);
+            board.TryAdd(new Ship(0, 5, Direction.Vertical, 10))
+                .Should()
+                .Be(false);
         }
 
-        [Fact] public void When_Hit_All_Ships_But_One_Game_IsNot_Lost() => 
-            ((Board2D) MakeBoardWithShipsAndHitAllButOneCell()).IsGameLost.Should().Be(false);
+        [Fact] public void When_Hit_All_Ships_But_One_Game_IsNot_Lost() => ((Board2D) MakeBoardWithShipsAndHitAllButOneCell())
+            .IsGameLost
+            .Should()
+            .Be(false);
 
-        [Fact] public void When_Hit_All_Ships_Game_Is_Lost() => ((Board2D) MakeBoardWithShipsAndHitAll()).IsGameLost.Should().Be(true);
+        [Fact] public void When_Hit_All_Ships_Game_Is_Lost() => ((Board2D) MakeBoardWithShipsAndHitAll()).IsGameLost
+            .Should()
+            .Be(true);
 
         protected virtual Board2D MakeBoard() => new SparseBoard2D();
 
