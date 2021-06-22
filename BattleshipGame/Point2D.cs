@@ -12,9 +12,14 @@ namespace BattleshipGame
         }
 
         public uint X { get; }
+
         public uint Y { get; }
+
+        /// <summary>The point may or may not be occupied by a piece. If occupied, it contains a reference to the piece.</summary>
         public Maybe<Piece> Piece { get; }
+
         public bool IsOccupied => Piece.IsSomething();
+
         public bool IsHit { get; private set;}
 
         public void Hit() => IsHit = true;
