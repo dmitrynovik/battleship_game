@@ -1,3 +1,5 @@
+using Functional.Maybe;
+
 namespace BattleshipGame
 {
     public class Point2D
@@ -6,12 +8,13 @@ namespace BattleshipGame
         {
             X = x;
             Y = y;
-            Piece = piece;
+            Piece = piece == null ? Maybe<Piece>.Nothing : piece.ToMaybe();
         }
 
         public uint X { get; }
         public uint Y { get; }
-        public Piece Piece { get; }
+        public Maybe<Piece> Piece { get; }
+        public bool IsOccupied => Piece.IsSomething();
         public bool IsHit { get; private set;}
 
         public void Hit() => IsHit = true;
