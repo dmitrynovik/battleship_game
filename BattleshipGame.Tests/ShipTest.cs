@@ -13,7 +13,7 @@ namespace BattleshipGame.Tests
             .Should().Be(false);
 
         [Test]
-        public void Ship_Of_Size_2_Hit_Twice_Should_Be_Alive() => MakeShip()
+        public void Ship_Of_Size_2_Hit_Twice_Should_Be_Dead() => MakeShip()
             .Hit(0, 0)
             .Hit(1, 0)
             .IsDead
