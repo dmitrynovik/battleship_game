@@ -16,7 +16,8 @@ namespace BattleshipGame
             Size = size;
             Orientation = orientation;
 
-            _points =  Enumerable.Range(0, Convert.ToInt32(Size))
+            _points =  Enumerable
+                .Range(0, Convert.ToInt32(Size))
                 .Select(n => Orientation == Direction.Horizontal ?
                     new Point2D((uint)(left + n), top, this) :
                     new Point2D(left, (uint)(top + n), this)
@@ -25,6 +26,7 @@ namespace BattleshipGame
         }
 
         public uint Size { get; }
+
         public Direction Orientation { get ;}
 
         public override IEnumerable<Point2D> GetPoints() => _points;
