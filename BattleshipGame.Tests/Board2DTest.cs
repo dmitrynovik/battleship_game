@@ -30,8 +30,7 @@ namespace BattleshipGame.Tests
             .Should()
             .Be(false);
 
-       [Fact]
-        public void Cannot_Add_Vertical_Ship_To_Board_OutOf_Y_Bounds() => MakeBoard()
+       [Fact] public void Cannot_Add_Vertical_Ship_To_Board_OutOf_Y_Bounds() => MakeBoard()
             .TryAdd(new Ship(0, 1, Direction.Vertical, 10))
             .Should()
             .Be(false);
