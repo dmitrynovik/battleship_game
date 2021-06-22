@@ -18,7 +18,8 @@ namespace BattleshipGame
 
         protected override bool TryAddImpl(Piece piece)
         {
-            var piecePoints = piece.GetPoints()
+            var piecePoints = piece
+                .GetPoints()
                 .ToDictionary(ComputeUniquePointKey, p => p);
 
             if (piecePoints.Keys.Any(key => _points.ContainsKey(key)))
