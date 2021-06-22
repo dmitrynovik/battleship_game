@@ -59,16 +59,16 @@ namespace BattleshipGame.Tests
         }
 
         [Test]
-        public void When_Hit_All_Ships_But_One_Game_IsNot_Lost() => ((SparseBoard2D) MakeBoardWithShipsAndHitAllButOneCell())
+        public void When_Hit_All_Ships_But_One_Game_IsNot_Lost() => ((Board2D) MakeBoardWithShipsAndHitAllButOneCell())
             .IsGameLost.Should().Be(false);
 
         [Test]
-        public void When_Hit_All_Ships_Game_Is_Lost() => ((SparseBoard2D) MakeBoardWithShipsAndHitAll())
+        public void When_Hit_All_Ships_Game_Is_Lost() => ((Board2D) MakeBoardWithShipsAndHitAll())
             .IsGameLost.Should().Be(true);
 
-        protected virtual SparseBoard2D MakeBoard() => new FastBoard2D();
+        protected virtual Board2D MakeBoard() => new SparseBoard2D();
 
-        private SparseBoard2D MakeBoardWithShips() => MakeBoard()
+        private Board2D MakeBoardWithShips() => MakeBoard()
             .Add(new Ship(1, 1, Direction.Horizontal, 2))
             .Add(new Ship(1, 3, Direction.Vertical, 3));
 

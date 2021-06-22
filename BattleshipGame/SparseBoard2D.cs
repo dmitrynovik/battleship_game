@@ -1,49 +1,44 @@
-using System.Linq;
+﻿using System.Linq;
+using System.Collections.Generic;
 
 namespace BattleshipGame
 {
     /// <summary>
-    /// An abstract 2D game board.
-    ///
-    /// For the simplicity of implementation, a board can be also viewed as a piece, which is a Union of all pieces (shapes) it holds. 
+    /// The fast an memory-greedy implementation of 2D board:
+    /// - only allocates memory for points occupied by pieces (e.g. ships)
+    /// - computes a unique hash key for occupied points to do fast O(1) lookup
     /// </summary>    
-    public abstract class SparseBoard2D : Piece
+    public class SparseBoard2D : Board2D
     {
-        public SparseBoard2D(uint width = 10, uint height = 10) : base(0, 0)
+        private IDictionary<uint, Point2D> _points = new Dictionary<uint, Point2D>();
+
+        public SparseBoard2D(uint width = 10, uint height = 10) : base(width, height) {  }
+
+        public override IEnumerable<Point2D> GetPoints() => _points.Values;
+
+        protected override bool TryAddImpl(Piece piece)
         {
-            Height = height;
-            Width = width;
-        }
+            var piecePoints = piece.GetPoints()
+                .ToDictionary(ComputeUniquePointKey, p => p);
 
-        public uint Height { get; }
-        public uint Width { get; }  
-
-        public bool TryAdd(Piece piece)
-        {
-            if (piece == null)
-                return false;
-
-            if (piece.GetPoints().Any(p => p.X >= Width || p.Y >= Height))
+            if (piecePoints.Keys.Any(key => _points.ContainsKey(key)))
             {
-                // out of bounds:
-                return false;
+                // point is already occupied by another piece => can't add a piece
+                return false;                
             }
 
-            return TryAddImpl(piece);
+            foreach (var kvp in piecePoints)
+            {
+                _points.Add(kvp.Key, kvp.Value);
+            }
+            return true;
         }
 
-        public SparseBoard2D Add(Piece piece)
-        {
-            TryAdd(piece);
-            return this;
-        }
-
-        protected abstract bool TryAddImpl(Piece piece);
-
-        public bool IsGameLost => IsDead;
-
-        public override string ToString() => $"{GetType()} {Width}x{Height}";
-
-        // See the base Piece class for the Attack method
+        /// <summary>
+        /// Computes the unique hash key for the point so that we can find occupied points in O(1)
+        /// </summary>
+        private uint ComputeUniquePointKey(Point2D point) => Width >= Height ?
+                (Width * point.X) + point.Y :
+                (Height * point.Y) + point.X;
     }
 }
