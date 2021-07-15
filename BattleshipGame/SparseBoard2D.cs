@@ -14,6 +14,11 @@ namespace BattleshipGame
 
         public SparseBoard2D(uint width = 10, uint height = 10) : base(width, height) {  }
 
+        public override void AddOrReplacePoint(Point2D point) 
+        {
+            _points[ComputeUniquePointKey(point)] = point;
+        }
+
         public override IEnumerable<Point2D> GetPoints() => _points.Values;
 
         protected override bool TryAddImpl(Piece piece)
@@ -38,8 +43,14 @@ namespace BattleshipGame
         /// <summary>
         /// Computes the unique hash key for the point so that we can find occupied points in O(1)
         /// </summary>
-        private uint ComputeUniquePointKey(Point2D point) => Width >= Height ?
+        private uint ComputeUniquePointKey(Point2D point)
+        {
+            unchecked
+            {
+                return Width >= Height ?
                 (Width * point.X) + point.Y :
                 (Height * point.Y) + point.X;
+            }
+        }
     }
 }

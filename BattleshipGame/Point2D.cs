@@ -2,38 +2,10 @@ using Functional.Maybe;
 
 namespace BattleshipGame
 {
-    public class Point2D
+    public record Point2D(uint X, uint Y, Maybe<Piece> Piece, bool IsHit = false)
     {
-        public Point2D(uint x, uint y, Piece piece = null)
-        {
-            X = x;
-            Y = y;
-            Piece = piece == null ? Maybe<Piece>.Nothing : piece.ToMaybe();
-        }
-
-        public uint X { get; }
-
-        public uint Y { get; }
-
-        /// <summary>The point may or may not be occupied by a piece. If occupied, it contains a reference to the piece.</summary>
-        public Maybe<Piece> Piece { get; }
-
         public bool IsOccupied => Piece.IsSomething();
 
-        public bool IsHit { get; private set;}
-
-        public void Hit() => IsHit = true;
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (1931 * X.GetHashCode()) ^ (2333 * Y.GetHashCode());
-            }
-        }
-
-        public override bool Equals(object obj) => obj is Point2D pt && pt.X == X && pt.Y == Y;
-
-        public override string ToString() => $"{nameof(Point2D)} ({X},{Y})";
+        public Point2D Hit() => new(X, Y, Piece, true);
     }
 }
